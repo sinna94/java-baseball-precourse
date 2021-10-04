@@ -6,9 +6,9 @@ import view.TerminalView;
 
 public class GameController {
 
-	private NumberSet computerNumberSet;
-	private NumberSet userNumberSet;
-	private TerminalView view;
+	private final NumberSet computerNumberSet;
+	private final NumberSet userNumberSet;
+	private final TerminalView view;
 
 	public GameController(TerminalView view, NumberSet computerNumberSet, NumberSet userNumberSet) {
 		this.view = view;
@@ -16,13 +16,41 @@ public class GameController {
 		this.userNumberSet = userNumberSet;
 	}
 
-	public void runGame() {
+	public void startGame() {
 		view.printGameStartMessage();
+		do {
+			playBaseBall();
+		} while (checkRestart());
+	}
+
+	private boolean checkRestart() {
+		String line;
+		do {
+			view.printRestartMessage();
+			line = view.readLine();
+		} while (!checkRestartFormat(line));
+
+		return line.equals("1");
+	}
+
+	private boolean checkRestartFormat(String line) {
+		return line.matches("[1-2]");
+	}
+
+	private void playBaseBall() {
+		int strike = 0;
+		while (strike != 3) {
+			runUserInput();
+			BallCount ballCount = calculateBallCount();
+			view.printBallCount(ballCount);
+			strike = ballCount.getStrike();
+		}
+	}
+
+	private void runUserInput() {
 		do {
 			view.printInputMessage();
 		} while (!generateUserNumberSet());
-		BallCount ballCount = calculateBallCount();
-		view.printBallCount(ballCount);
 	}
 
 	private BallCount calculateBallCount() {

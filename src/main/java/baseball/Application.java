@@ -10,6 +10,6 @@ public class Application {
 		NumberSet computerNumberSet = NumberSet.generateRandomNumberSet();
 		NumberSet userNumberSet = new NumberSet();
 		GameController gameController = new GameController(terminalView, computerNumberSet, userNumberSet);
-		gameController.runGame();
+		gameController.startGame();
 	}
 }
