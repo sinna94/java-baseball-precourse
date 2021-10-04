@@ -18,6 +18,11 @@ public class GameController {
 	public void runGame() {
 		view.printGameStartMessage();
 		generateUserNumberSet();
+		compareNumberSet();
+	}
+
+	private void compareNumberSet() {
+		computerNumberSet.compare(userNumberSet);
 	}
 
 

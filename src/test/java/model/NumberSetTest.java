@@ -24,21 +24,21 @@ class NumberSetTest {
 	}
 
 	@Test
-	void addDuplicatedUserInputTest(){
+	void addDuplicatedUserInputTest() {
 		NumberSet numberSet = new NumberSet();
 		numberSet.addUserInput("1");
 		assertFalse(numberSet.addUserInput("1"));
 	}
 
 	@Test
-	void userInputFormatExceptionTest(){
+	void userInputFormatExceptionTest() {
 		NumberSet numberSet = new NumberSet();
 		numberSet.addUserInput("1");
 		assertFalse(numberSet.addUserInput("1"));
 	}
 
 	@Test
-	void getInputNumberCountTest(){
+	void getInputNumberCountTest() {
 		NumberSet numberSet = new NumberSet();
 		numberSet.addUserInput("1");
 		numberSet.addUserInput("1");
@@ -47,7 +47,7 @@ class NumberSetTest {
 	}
 
 	@Test
-	void fillNumberArrTest(){
+	void fillNumberArrTest() {
 		NumberSet numberSet = new NumberSet();
 		assertNull(numberSet.getNumberArr());
 		numberSet.addUserInput("1");
@@ -55,5 +55,79 @@ class NumberSetTest {
 		numberSet.fillNumberArr();
 		int[] numberArr = numberSet.getNumberArr();
 		assertEquals(2, numberArr.length);
+	}
+
+	@Test
+	void Strike3Test() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getDefaultNumberSet();
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(3, ballCount.getStrike());
+		assertEquals(0, ballCount.getBall());
+	}
+
+	private NumberSet getDefaultNumberSet() {
+		return getUserNumberSet("1", "2", "3");
+	}
+
+	private NumberSet getUserNumberSet(String s, String s2, String s3) {
+		NumberSet userNumberSet = new NumberSet();
+		userNumberSet.addUserInput(s);
+		userNumberSet.addUserInput(s2);
+		userNumberSet.addUserInput(s3);
+		userNumberSet.fillNumberArr();
+		return userNumberSet;
+	}
+
+	@Test
+	void Strike2Test() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getUserNumberSet("1", "2", "4");
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(2, ballCount.getStrike());
+		assertEquals(0, ballCount.getBall());
+	}
+
+
+	@Test
+	void Strike1Ball2Test() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getUserNumberSet("1", "3", "2");
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(1, ballCount.getStrike());
+		assertEquals(2, ballCount.getBall());
+	}
+
+	@Test
+	void Strike0Ball2Test() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getUserNumberSet("4", "3", "2");
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(0, ballCount.getStrike());
+		assertEquals(2, ballCount.getBall());
+	}
+
+	@Test
+	void Strike0Ball1Test() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getUserNumberSet("4", "3", "5");
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(0, ballCount.getStrike());
+		assertEquals(1, ballCount.getBall());
+	}
+
+	@Test
+	void NotingTest() {
+		NumberSet computerNumberSet = getDefaultNumberSet();
+		NumberSet userNumberSet = getUserNumberSet("4", "6", "5");
+
+		BallCount ballCount = computerNumberSet.compare(userNumberSet);
+		assertEquals(0, ballCount.getStrike());
+		assertEquals(0, ballCount.getBall());
 	}
 }
