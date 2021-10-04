@@ -8,17 +8,10 @@ import java.util.LinkedHashSet;
 public class NumberSet {
 	private int[] numberArr;
 
-	public NumberSet() {
-	}
-
-	private NumberSet(int[] numberArr) {
-		this.numberArr = numberArr;
-	}
-
 	/**
 	 * 랜덤함 3자리 수를 가진 NumberSet 생성
 	 */
-	public static NumberSet generateRandomNumberSet() {
+	public void generateRandomNumberSet() {
 
 		LinkedHashSet<Integer> numberSet = new LinkedHashSet<>();
 
@@ -27,7 +20,7 @@ public class NumberSet {
 			numberSet.add(randomNumber);
 		}
 
-		return new NumberSet(toArray(numberSet));
+		numberArr = toArray(numberSet);
 	}
 
 	private static int[] toArray(LinkedHashSet<Integer> numberSet) {
@@ -46,6 +39,7 @@ public class NumberSet {
 
 	/**
 	 * 숫자 문자열을 정수형 배열로 변환하여 저장
+	 *
 	 * @param userInput 숫자 문자열
 	 */
 	public void addUserInput(String userInput) {
@@ -59,6 +53,7 @@ public class NumberSet {
 
 	/**
 	 * numberArr 와 userNumberSet 의 numberArr 를 비교하여 볼 카운트를 반환
+	 *
 	 * @param userNumberSet 비교할 숫자 세트
 	 * @return 볼 카운트
 	 */

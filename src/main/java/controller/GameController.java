@@ -19,6 +19,7 @@ public class GameController {
 	public void startGame() {
 		view.printGameStartMessage();
 		do {
+			computerNumberSet.generateRandomNumberSet();
 			playBaseBall();
 		} while (checkRestart());
 	}

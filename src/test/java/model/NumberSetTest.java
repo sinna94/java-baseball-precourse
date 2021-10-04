@@ -10,7 +10,8 @@ class NumberSetTest {
 
 	@Test
 	void generateRandomNumberSet() {
-		NumberSet numberSet = NumberSet.generateRandomNumberSet();
+		NumberSet numberSet = new NumberSet();
+		numberSet.generateRandomNumberSet();
 
 		int[] numberArr = numberSet.getNumberArr();
 		assertEquals(3, numberArr.length);

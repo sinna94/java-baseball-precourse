@@ -7,7 +7,7 @@ import view.TerminalView;
 public class Application {
 	public static void main(String[] args) {
 		TerminalView terminalView = new TerminalView();
-		NumberSet computerNumberSet = NumberSet.generateRandomNumberSet();
+		NumberSet computerNumberSet = new NumberSet();
 		NumberSet userNumberSet = new NumberSet();
 		GameController gameController = new GameController(terminalView, computerNumberSet, userNumberSet);
 		gameController.startGame();
