@@ -5,9 +5,14 @@ import nextstep.utils.Randoms;
 import java.util.LinkedHashSet;
 
 public class NumberSet {
-	private final int[] numberArr;
+	private int[] numberArr;
+	private LinkedHashSet<Integer> numberSet;
 
-	NumberSet(int[] numberArr) {
+	public NumberSet() {
+		this.numberSet = new LinkedHashSet<>();
+	}
+
+	private NumberSet(int[] numberArr) {
 		this.numberArr = numberArr;
 	}
 
@@ -38,7 +43,32 @@ public class NumberSet {
 		return numberArr;
 	}
 
+	public boolean isDuplicated(int newNumber) {
+		return this.numberSet.contains(newNumber);
+	}
+
+	public int getInputNumberCount() {
+		return numberSet.size();
+	}
+
 	public int[] getNumberArr() {
 		return numberArr;
+	}
+
+	public boolean addUserInput(String userInput) {
+		try {
+			int userInputNum = Integer.parseInt(userInput);
+			if (isDuplicated(userInputNum)) {
+				return false;
+			}
+			this.numberSet.add(userInputNum);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public void fillNumberArr() {
+		numberArr = toArray(numberSet);
 	}
 }
