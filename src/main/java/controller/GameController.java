@@ -1,16 +1,17 @@
 package controller;
 
 import model.BallCount;
-import model.NumberSet;
+import model.ComputerNumberSet;
+import model.UserNumberSet;
 import view.TerminalView;
 
 public class GameController {
 
-	private final NumberSet computerNumberSet;
-	private final NumberSet userNumberSet;
+	private final ComputerNumberSet computerNumberSet;
+	private final UserNumberSet userNumberSet;
 	private final TerminalView view;
 
-	public GameController(TerminalView view, NumberSet computerNumberSet, NumberSet userNumberSet) {
+	public GameController(TerminalView view, ComputerNumberSet computerNumberSet, UserNumberSet userNumberSet) {
 		this.view = view;
 		this.computerNumberSet = computerNumberSet;
 		this.userNumberSet = userNumberSet;
@@ -36,7 +37,7 @@ public class GameController {
 
 	private boolean checkRestartFormat(String line) {
 		boolean matches = line.matches("[1-2]");
-		if(!matches){
+		if (!matches) {
 			view.printRestartInputErrorMessage();
 		}
 		return matches;
