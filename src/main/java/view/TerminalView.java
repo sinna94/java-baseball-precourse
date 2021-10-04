@@ -45,7 +45,7 @@ public class TerminalView {
 		appendStrike(strike, stringBuilder);
 		appendBall(ball, stringBuilder);
 		appendNothing(strike, ball, stringBuilder);
-		prlintBallCount(stringBuilder);
+		printBallCount(stringBuilder);
 		print3Strike(strike);
 	}
 
@@ -56,7 +56,7 @@ public class TerminalView {
 		}
 	}
 
-	private void prlintBallCount(StringBuilder stringBuilder) {
+	private void printBallCount(StringBuilder stringBuilder) {
 		if (stringBuilder.length() > 1) {
 			println(stringBuilder.toString());
 		}
