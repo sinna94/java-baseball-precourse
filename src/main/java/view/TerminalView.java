@@ -51,7 +51,7 @@ public class TerminalView {
 
 	private void print3Strike(int strike) {
 		if (strike == 3) {
-			print("3개의 숫자를 모두 맞췄습니다!");
+			print("3개의 숫자를 모두 맞췄습니다! ");
 			println("게임 끝");
 		}
 	}
@@ -82,5 +82,9 @@ public class TerminalView {
 
 	public void printRestartMessage() {
 		println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+	}
+
+	public void printRestartInputErrorMessage() {
+		println("1 또는 2 를 입력하세요.");
 	}
 }

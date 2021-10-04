@@ -35,7 +35,11 @@ public class GameController {
 	}
 
 	private boolean checkRestartFormat(String line) {
-		return line.matches("[1-2]");
+		boolean matches = line.matches("[1-2]");
+		if(!matches){
+			view.printRestartInputErrorMessage();
+		}
+		return matches;
 	}
 
 	private void playBaseBall() {
