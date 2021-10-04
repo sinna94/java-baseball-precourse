@@ -1,5 +1,6 @@
 package view;
 
+import model.BallCount;
 import nextstep.utils.Console;
 
 public class TerminalView {
@@ -13,7 +14,7 @@ public class TerminalView {
 	}
 
 	public void printDuplicatedNumberMessage() {
-		printLine("숫자가 중복 또는 숫자가 아닙니다. 다시 입력해주세요.");
+		printLine("숫자가 중복됩니다.");
 	}
 
 	private void printLine(String content) {
@@ -21,7 +22,7 @@ public class TerminalView {
 	}
 
 	public void printInputMessage() {
-		printLine("1~9 사이의 숫자를 입력해주세요. (-1 입력시 게임 종료)");
+		printLine("중복되지 않는 세자리 숫자를 입력해주세요. (-1 입력시 게임 종료)");
 	}
 
 	public void printEndMessage() {
@@ -29,6 +30,21 @@ public class TerminalView {
 	}
 
 	public void printInputError() {
-		printLine("1 ~ 9 또는 -1 만 입력할 수 있습니다.");
+		printLine("세자리 수 또는 -1 만 입력할 수 있습니다.");
 	}
+
+	public void printBallCount(BallCount ballCount) {
+
+		int strike = ballCount.getStrike();
+		int ball = ballCount.getBall();
+
+		if (strike == 3) {
+			printLine("모두 맞췄습니다.");
+			return;
+		}
+
+
+
+	}
+
 }

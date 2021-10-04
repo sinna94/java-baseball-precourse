@@ -3,15 +3,12 @@ package model;
 import nextstep.utils.Randoms;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 
 public class NumberSet {
 	private int[] numberArr;
-	private LinkedHashSet<Integer> numberSet;
 
 	public NumberSet() {
-		this.numberSet = new LinkedHashSet<>();
 	}
 
 	private NumberSet(int[] numberArr) {
@@ -20,8 +17,6 @@ public class NumberSet {
 
 	/**
 	 * 랜덤함 3자리 수를 가진 NumberSet 생성
-	 *
-	 * @return NumberSet
 	 */
 	public static NumberSet generateRandomNumberSet() {
 
@@ -45,39 +40,31 @@ public class NumberSet {
 		return numberArr;
 	}
 
-	public boolean isDuplicated(int newNumber) {
-		return this.numberSet.contains(newNumber);
-	}
-
-	public int getInputNumberCount() {
-		return numberSet.size();
-	}
-
 	public int[] getNumberArr() {
 		return numberArr;
 	}
 
-	public boolean addUserInput(String userInput) {
-		try {
-			int userInputNum = Integer.parseInt(userInput);
-			if (isDuplicated(userInputNum)) {
-				return false;
-			}
-			this.numberSet.add(userInputNum);
-		} catch (NumberFormatException e) {
-			return false;
+	/**
+	 * 숫자 문자열을 정수형 배열로 변환하여 저장
+	 * @param userInput 숫자 문자열
+	 */
+	public void addUserInput(String userInput) {
+		char[] chars = userInput.toCharArray();
+		int[] inputNumberArr = new int[chars.length];
+		for (int i = 0; i < chars.length; i++) {
+			inputNumberArr[i] = chars[i] - '0';
 		}
-		return true;
+		this.numberArr = inputNumberArr;
 	}
 
-	public void fillNumberArr() {
-		numberArr = toArray(numberSet);
-	}
-
-	public BallCount compare(NumberSet userNumberSet) {
+	/**
+	 * numberArr 와 userNumberSet 의 numberArr 를 비교하여 볼 카운트를 반환
+	 * @param userNumberSet 비교할 숫자 세트
+	 * @return 볼 카운트
+	 */
+	public BallCount calculateBallCount(NumberSet userNumberSet) {
 		int strikeCount = 0;
 		int ballCount = 0;
-
 		int[] userNumberArr = userNumberSet.numberArr;
 
 		for (int i = 0; i < numberArr.length; i++) {
@@ -91,7 +78,7 @@ public class NumberSet {
 	private int getBallCount(int ballCount, int userNumber, int[] computerNumberArr, int index) {
 		int numberIndex = getNumberIndex(userNumber, computerNumberArr);
 
-		if(numberIndex <= -1){
+		if (numberIndex <= -1) {
 			return ballCount;
 		}
 
@@ -102,7 +89,7 @@ public class NumberSet {
 		return ballCount;
 	}
 
-	private int getNumberIndex(int userNumber, int[] computerNumberArr){
+	private int getNumberIndex(int userNumber, int[] computerNumberArr) {
 		return Arrays.binarySearch(computerNumberArr, userNumber);
 	}
 

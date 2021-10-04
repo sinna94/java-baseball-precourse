@@ -1,6 +1,8 @@
 package model;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,114 +22,35 @@ class NumberSetTest {
 	@Test
 	void addUserInputTest() {
 		NumberSet numberSet = new NumberSet();
-		assertTrue(numberSet.addUserInput("1"));
-	}
-
-	@Test
-	void addDuplicatedUserInputTest() {
-		NumberSet numberSet = new NumberSet();
-		numberSet.addUserInput("1");
-		assertFalse(numberSet.addUserInput("1"));
-	}
-
-	@Test
-	void userInputFormatExceptionTest() {
-		NumberSet numberSet = new NumberSet();
-		numberSet.addUserInput("1");
-		assertFalse(numberSet.addUserInput("1"));
-	}
-
-	@Test
-	void getInputNumberCountTest() {
-		NumberSet numberSet = new NumberSet();
-		numberSet.addUserInput("1");
-		numberSet.addUserInput("1");
-		numberSet.addUserInput("2");
-		assertEquals(2, numberSet.getInputNumberCount());
-	}
-
-	@Test
-	void fillNumberArrTest() {
-		NumberSet numberSet = new NumberSet();
-		assertNull(numberSet.getNumberArr());
-		numberSet.addUserInput("1");
-		numberSet.addUserInput("2");
-		numberSet.fillNumberArr();
-		int[] numberArr = numberSet.getNumberArr();
-		assertEquals(2, numberArr.length);
-	}
-
-	@Test
-	void Strike3Test() {
-		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getDefaultNumberSet();
-
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(3, ballCount.getStrike());
-		assertEquals(0, ballCount.getBall());
+		numberSet.addUserInput("123");
+		assertEquals(3, numberSet.getNumberArr().length);
 	}
 
 	private NumberSet getDefaultNumberSet() {
-		return getUserNumberSet("1", "2", "3");
+		return getUserNumberSet("123");
 	}
 
-	private NumberSet getUserNumberSet(String s, String s2, String s3) {
+	private NumberSet getUserNumberSet(String s) {
 		NumberSet userNumberSet = new NumberSet();
 		userNumberSet.addUserInput(s);
-		userNumberSet.addUserInput(s2);
-		userNumberSet.addUserInput(s3);
-		userNumberSet.fillNumberArr();
 		return userNumberSet;
 	}
 
-	@Test
-	void Strike2Test() {
+	@ParameterizedTest
+	@CsvSource({
+		"123,3,0",
+		"124,2,0",
+		"132,1,2",
+		"432,0,2",
+		"435,0,1",
+		"465,0,0"
+	})
+	void ballCountTest(String input, int strike, int ball) {
 		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getUserNumberSet("1", "2", "4");
+		NumberSet userNumberSet = getUserNumberSet(input);
 
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(2, ballCount.getStrike());
-		assertEquals(0, ballCount.getBall());
-	}
-
-
-	@Test
-	void Strike1Ball2Test() {
-		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getUserNumberSet("1", "3", "2");
-
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(1, ballCount.getStrike());
-		assertEquals(2, ballCount.getBall());
-	}
-
-	@Test
-	void Strike0Ball2Test() {
-		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getUserNumberSet("4", "3", "2");
-
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(0, ballCount.getStrike());
-		assertEquals(2, ballCount.getBall());
-	}
-
-	@Test
-	void Strike0Ball1Test() {
-		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getUserNumberSet("4", "3", "5");
-
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(0, ballCount.getStrike());
-		assertEquals(1, ballCount.getBall());
-	}
-
-	@Test
-	void NotingTest() {
-		NumberSet computerNumberSet = getDefaultNumberSet();
-		NumberSet userNumberSet = getUserNumberSet("4", "6", "5");
-
-		BallCount ballCount = computerNumberSet.compare(userNumberSet);
-		assertEquals(0, ballCount.getStrike());
-		assertEquals(0, ballCount.getBall());
+		BallCount ballCount = computerNumberSet.calculateBallCount(userNumberSet);
+		assertEquals(strike, ballCount.getStrike());
+		assertEquals(ball, ballCount.getBall());
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import model.BallCount;
 import model.NumberSet;
 import view.TerminalView;
 
@@ -17,37 +18,49 @@ public class GameController {
 
 	public void runGame() {
 		view.printGameStartMessage();
-		generateUserNumberSet();
-		compareNumberSet();
-	}
-
-	private void compareNumberSet() {
-		computerNumberSet.compare(userNumberSet);
-	}
-
-
-	private void generateUserNumberSet() {
-		while (this.userNumberSet.getInputNumberCount() < 3) {
+		do {
 			view.printInputMessage();
-			String userInput = view.readLine();
-			addUserInput(userInput);
+		} while (!generateUserNumberSet());
+		BallCount ballCount = calculateBallCount();
+		view.printBallCount(ballCount);
+	}
+
+	private BallCount calculateBallCount() {
+		return computerNumberSet.calculateBallCount(userNumberSet);
+	}
+
+	private boolean generateUserNumberSet() {
+		String userInput = view.readLine();
+		if (checkInputFormat(userInput)) {
+			return false;
 		}
-		userNumberSet.fillNumberArr();
+		exitGame(userInput);
+		if (isDuplicated(userInput)) {
+			return false;
+		}
+		addUserInput(userInput);
+		return true;
 	}
 
 	private void addUserInput(String userInput) {
-		if (!userInput.matches("[-?1|2-9]")) {
-			view.printInputError();
-			return;
-		}
-		exitGame(userInput);
-
-		boolean addResult = this.userNumberSet.addUserInput(userInput);
-		if (!addResult) {
-			view.printDuplicatedNumberMessage();
-		}
+		this.userNumberSet.addUserInput(userInput);
 	}
 
+	private boolean checkInputFormat(String userInput) {
+		if (!userInput.matches("-1|[1-9]{3}")) {
+			view.printInputError();
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDuplicated(String userInput) {
+		if (userInput.matches("(?=.?([1-9]).?\\1)^[1-9]{3}$")) {
+			view.printDuplicatedNumberMessage();
+			return true;
+		}
+		return false;
+	}
 
 	private void exitGame(String userInput) {
 		if (userInput.equals("-1")) {
